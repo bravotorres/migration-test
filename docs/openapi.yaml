@@ -1,0 +1,237 @@
+openapi: 3.0.2
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /empleados/:
+    get:
+      tags:
+        - empleados
+      summary: Read All Employees
+      description: |-
+        READ ALL Employees
+        :param commerce: Commerce necessary to proceed.
+        :param db: Database session.
+        :return:
+        NOTE: Not filtered by CommerceID
+      operationId: read_all_employees_empleados__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - HTTPBasic: []
+    post:
+      tags:
+        - empleados
+      summary: Public New Employee
+      description: |-
+        CREATE Employee
+        :param employee:
+        :param commerce:
+        :param db:
+        :return:
+      operationId: public_new_employee_empleados__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeNew'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBasic: []
+  /empleados/{uuid_empleado}:
+    get:
+      tags:
+        - empleados
+      summary: Read Employee
+      description: |-
+        READ Employee
+        :param uuid_empleado: UUID to search Employee
+        :param commerce: API Key access
+        :param db:
+        :return:
+      operationId: read_employee_empleados__uuid_empleado__get
+      parameters:
+        - required: true
+          schema:
+            title: Uuid Empleado
+            type: string
+            format: uuid
+          name: uuid_empleado
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBasic: []
+    put:
+      tags:
+        - empleados
+      summary: Public New Employee
+      description: |-
+        UPDATE Employee
+        :param uuid_empleado: 
+        :param employee: 
+        :param commerce: 
+        :param db: 
+        :return: 
+      operationId: public_new_employee_empleados__uuid_empleado__put
+      parameters:
+        - required: true
+          schema:
+            title: Uuid Empleado
+            type: string
+            format: uuid
+          name: uuid_empleado
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBasic: []
+    delete:
+      tags:
+        - empleados
+      summary: Public New Employee
+      description: |-
+        DELETE Employee
+        :param uuid_empleado:
+        :param commerce:
+        :param db:
+        :return:
+      operationId: public_new_employee_empleados__uuid_empleado__delete
+      parameters:
+        - required: true
+          schema:
+            title: Uuid Empleado
+            type: string
+            format: uuid
+          name: uuid_empleado
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBasic: []
+components:
+  schemas:
+    EmployeeNew:
+      title: EmployeeNew
+      required:
+        - nombre
+        - apellidos
+        - pin
+      type: object
+      properties:
+        nombre:
+          title: Nombre
+          type: string
+        apellidos:
+          title: Apellidos
+          type: string
+        pin:
+          title: Pin
+          type: string
+      description: Base Employee Schema
+    EmployeeUpdate:
+      title: EmployeeUpdate
+      required:
+        - nombre
+        - apellidos
+        - pin
+        - activo
+      type: object
+      properties:
+        nombre:
+          title: Nombre
+          type: string
+        apellidos:
+          title: Apellidos
+          type: string
+        pin:
+          title: Pin
+          type: string
+        activo:
+          title: Activo
+          type: boolean
+      description: Base Employee Schema
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            type: string
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic

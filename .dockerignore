@@ -1,10 +1,13 @@
-# Created by https://www.toptal.com/developers/gitignore/api/flask,macos,python
-# Edit at https://www.toptal.com/developers/gitignore?templates=flask,macos,python
 
-### IDE' ###
-.idea/
-.vscode/
-.directory/
+# Created by https://www.toptal.com/developers/gitignore/api/python,flask,vscode,pycharm,netbeans,sublimetext,eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,flask,vscode,pycharm,netbeans,sublimetext,eclipse
+
+Dockerfile
+.dockerignore
+.gitignore
+.git
+.flake*
+.~*
 storage/*.txt
 storage/*.yml
 storage/*.json
@@ -83,6 +86,7 @@ instance/*
 
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
+**/__pycache__/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -143,7 +147,7 @@ pytestdebug.log
 # Django stuff:
 *.log
 local_settings.py
-# db.sqlite3
+db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
@@ -187,7 +191,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+#.env
 .venv
 env/
 venv/
